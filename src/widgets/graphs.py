@@ -10,19 +10,40 @@ establishments_inspections_latest = st.session_state.establishments_inspections_
 
 
 
-def inspections_map():
+def inspections_map():  
+    score_range = st.session_state['score_range']
+    selected_category = st.session_state['selected_category']
+
+    temp_df = (
+        establishments_inspections_latest
+        .filter(pl.col('score').is_between(score_range[0], score_range[1]))
+    )
+    if selected_category != 'ALL CATEGORIES':
+        temp_df = temp_df.filter(pl.col('category') == selected_category)
+
     fig = px.scatter_map(
-        establishments_inspections_latest,
+        temp_df,
         lat='latitude',
         lon='longitude',
         color='score',
         text='google_name',
-        color_continuous_scale=['Red', 'LightGreen'],
+        color_continuous_scale=['Red', 'Orange', 'Green'],
         zoom=10,
         range_color=[65, 100],
         height=700,
+        custom_data=['google_name', 'inspection_date', 'score', 'average_rating'],
         # map_style='carto-darkmatter',
-    ).update_layout(coloraxis_showscale=False)
+    ).update_layout(
+        coloraxis_showscale=False
+    ).update_traces(
+        hovertemplate=(
+        '%{customdata[0]}<br>'
+        'Inspection Date: %{customdata[1]}<br>'
+        'Inspection Score: %{customdata[2]}<br>'
+        'Average Google Rating: %{customdata[3]}'
+        ),
+        marker=dict(size=10)
+    )
     
     return fig
 

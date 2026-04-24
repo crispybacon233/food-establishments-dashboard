@@ -4,21 +4,26 @@ import streamlit as st
 import polars as pl
 
 from src.widgets import filters, graphs
-
+from src.data import reset_session_states
 
 establishments = st.session_state.establishments
 inspections = st.session_state.inspections
 establishments_inspections_latest = st.session_state.establishments_inspections_latest
 
-filters.establishments_filter()
+with st.sidebar:
+    st.header('Restaurant Filter')
+    filters.establishments_filter()
+    button_container = st.empty()
+
+    st.header('Map Filter')
+    filters.category_filter()
+    filters.inspection_score_range_filter()
+
 
 map_tab, time_tab = st.tabs(['Map', 'Scores Over Time'])
 
 with map_tab:
-    button_container = st.empty()
     map_container = st.empty()
-
-
     fig = graphs.inspections_map()
     with button_container:
         if st.button('Go to Food Establishment'):
@@ -36,7 +41,10 @@ with map_tab:
                 st.error('No latitude or longitude found for the selected establishment')
 
     with map_container:
-        st.plotly_chart(fig)
+        st.plotly_chart(
+            fig, 
+            selection_mode='points',
+        )
 
 
 with time_tab:

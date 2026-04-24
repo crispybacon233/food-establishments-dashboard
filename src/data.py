@@ -65,3 +65,9 @@ def init_session_states():
 
     if 'selected_establishment' not in st.session_state:
         st.session_state.selected_establishment = 'Franklin Barbecue - 900 E 11TH ST AUSTIN'
+
+
+def reset_session_states():
+    st.session_state.selected_establishment = 'Franklin Barbecue - 900 E 11TH ST AUSTIN'
+    st.session_state.selected_category = 'ALL CATEGORIES'
+    st.session_state.score_range = (65, 100)
