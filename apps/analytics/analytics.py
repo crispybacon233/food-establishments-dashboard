@@ -2,4 +2,4 @@ import streamlit as st
 import polars as pl
 
 
-st.write('Analytics')
+st.write('PLACE HOLDER FOR ANALYTICS')
