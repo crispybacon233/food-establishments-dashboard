@@ -42,7 +42,8 @@ def inspections_map():
         'Inspection Score: %{customdata[2]}<br>'
         'Average Google Rating: %{customdata[3]}'
         ),
-        marker=dict(size=10)
+        marker=dict(size=10),
+        textfont=dict(color='black')
     )
     
     return fig
