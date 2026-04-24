@@ -5,7 +5,7 @@ from src.data import init_session_states
 
 
 st.set_page_config(
-    page_title='Food Establishment Inspection Scores',
+    page_title='Food Inspection Scores',
     page_icon='🍔🍟🍕',
     layout='centered',
     initial_sidebar_state='expanded',
@@ -16,7 +16,7 @@ apply_base_style()
 init_session_states()
 
 
-st.title('Food Establishment Inspection Scores')
+st.header('Food Inspection Scores')
 st.caption('Explore food establishment inspection scores for Austin, Texas.')
 
 apps = {
